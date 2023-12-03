@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import se.kthraven.userservice.Model.CustomUserDetailsService;
 
 import javax.sql.DataSource;
@@ -37,6 +38,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .httpBasic(basic -> basic.init(http))
                 .csrf(csrf -> csrf.disable())
+                .addFilterBefore(new SimpleAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
